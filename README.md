@@ -24,25 +24,25 @@ Because the external transfer occurs before the state update, an attacking contr
 The target contract (`Honeypot.sol`) is instantiated on a local virtual machine sandbox environment. An external user interacts with the protocol via `deposit()` to load a **5 Ether** bounty pool.
 
 *Current Contract State Verification (Showing 5 ETH balance):*
-![Target Vault Funded](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot%202026-06-02%20193500.png)
+![Target Vault Funded](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot202026-06-0220193500.png)
 
 ### Step 2: Exploit Payload Delivery
 The malicious agent contract (`Attacker.sol`) is deployed by supplying the target Honeypot's contract address to its constructor logic. The exploit is executed by calling `launchAttack()` with a starter payload of **1 Ether** to clear the initial contract constraints.
 
 *Exploit Execution Parameters (Sending 1 ETH via launchAttack):*
-![Exploit Initiation](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot%202026-06-02%20194631.png)
+![Exploit Initiation](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot202026-06-0220194631.png)
 
 ### Step 3: Draining the Vault Storage
 The recursive fallback structure intercepts the incoming funds mid-transaction, looping execution back into the vault before the state balance can be zeroed out. The exploit stops once the Honeypot's overall network balance falls below the threshold.
 
 *Post-Exploit Target State Verification (Honeypot balance at 0):*
-![Honeypot Completely Drained](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot%202026-06-02%20194710.png)
+![Honeypot Completely Drained](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot202026-06-0220194710.png)
 
 ### Step 4: Asset Recovery
 With the vault emptied, the attacker securely invokes `withdrawStolenFunds()`, routing the entire bounty pool out of the malicious proxy layer directly into the developer's controlled testing address.
 
 *Exploit Cleanup Status (Clean transaction log):*
-![Stolen Assets Cleared](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot%202026-06-02%20194906.png)
+![Stolen Assets Cleared](https://raw.githubusercontent.com/merinnn/Micro-Bounty-Honeypot/main/Screenshot202026-06-0220194906.png)
 
 ---
 
