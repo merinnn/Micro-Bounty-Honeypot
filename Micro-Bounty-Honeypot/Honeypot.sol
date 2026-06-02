@@ -10,7 +10,7 @@ contract Honeypot {
         balances[msg.sender] += msg.value;
     }
 
-    // ⚠️ VULNERABLE FUNCTION: Sends funds before updating the state
+    //  VULNERABLE FUNCTION: Sends funds before updating the state
     function withdraw() public {
         uint256 balance = balances[msg.sender];
         require(balance > 0, "Insufficient balance");
